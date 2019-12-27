@@ -1,0 +1,10 @@
+# CircleCI configuration for automated building and testing of the
+# ARTDock image.
+
+version: 2.1
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     - run: docker build -t artdock .
