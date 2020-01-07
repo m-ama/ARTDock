@@ -8,6 +8,9 @@
 # Base for installation
 FROM ubuntu:bionic
 LABEL maintainer="dhiman@musc.edu"
+RUN apt-get update && \
+      apt-get install -y --no-install-recommends\
+      libatlas-base-dev
 
 # Create directories
 RUN mkdir -p /usr/local/ART/bin
