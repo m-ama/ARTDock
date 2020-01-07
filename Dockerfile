@@ -36,8 +36,7 @@ RUN rm /usr/local/ART/acpcdetect_v2.0_LinuxCentOS6.7.tar.gz
 ENV PATH "$PATH:/usr/loca/ART/bin"
 ENV ARTHOME=/usr/local/ART
 
-# Create aliases
-RUN echo 'alias 3dwarper="./usr/local/ART/bin/3dwarper"'
-RUN echo 'alias acpcdetect="./usr/local/ART/bin/acpcdetect"'
-RUN echo 'alias applywarp3d="./usr/local/ART/bin/applywarp3d"'
-ENTRYPOINT [ "./usr/local/ART/bin/3dwarper"]
+# Create executables
+RUN echo '#!/bin/bash\n/usr/local/ART/bin/3dwarper "$@"' > /usr/bin/3dwarper && chmod +x /usr/bin/3dwarper
+RUN echo '#!/bin/bash\n/usr/local/ART/bin/acpcdetect "$@"' > /usr/bin/acpcdetect && chmod +x /usr/bin/acpcdetect
+RUN echo '#!/bin/bash\n/usr/local/ART/bin/applywarp3d "$@"' > /usr/bin/applywarp3d && chmod +x /usr/bin/applywarp3d
