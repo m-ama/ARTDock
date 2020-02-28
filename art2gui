@@ -1,0 +1,68 @@
+#!/bin/bash
+# art2gui - a script to execute Babak Ardekani's art2 registration
+# toolbox in GUI mode via Docker, where mounted path is stored in
+# /data
+
+######################################################################
+# Define default variables
+######################################################################
+fpath=$HOME
+d_tag="art"  # default docker container
+
+######################################################################
+# Command line help
+######################################################################
+usage()
+{
+    echo "Bash script to execute art2 in GUI mode using docker"
+    echo ""
+    echo "usage: art2gui [-t --tag <container name>] [-m --mount <directory to make available>] [-h --help]"
+    echo ""
+    echo "Parameters:"
+    echo "-t, --tag:   ARTdock docker container name; default: art"
+    echo "-m, --mount  directory to mount within Docker; default: none"
+    echo "-h, --help   print help doc"
+    echo ""
+    echo "GitHub: https://github.com/m-ama/ARTDock"
+    echo "Report issues at: https://github.com/m-ama/ARTDock/issues"
+    echo ""
+    echo "Copyright 2020. MUSC Advance MRI Analysis (MAMA)"
+}
+
+######################################################################
+# Parse input parameters
+######################################################################
+while [ "$1" != "" ]; do
+    case $1 in
+        -t | --tag )            shift
+                                d_tag=$1
+                                ;;
+        -m | --mount )          shift
+                                fpath=$1
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+######################################################################
+# Execute code
+######################################################################
+echo "ARTDock GUI for Mac"
+echo ""
+echo "Running Docker container:" $d_container
+echo $fpath "mounted at /data"
+echo ""
+
+# allow access from localhost
+xhost + 127.0.0.1
+
+# run art2 in ARTDock with X11 forwarding
+docker run -d --rm \
+-e DISPLAY=host.docker.internal:0 \
+-v $fpath:/data \
+$d_tag art2
