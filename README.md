@@ -23,7 +23,7 @@ Until this repo is made availble on DockerHub, this is the only way to build thi
 
 ## Running ARTDock
 
-# Running with GUI
+### Running with GUI
 ARTDock can be called with a GUI using X11 window forwarding. Windows users
 can use [Xming X Server](https://sourceforge.net/projects/xming/) for X11
 forwarding, while Mac users can use [XQuartz](https://www.xquartz.org/)
@@ -55,7 +55,7 @@ windows with Docker on Mac](https://medium.com/@mreichelt/how-to-show-x11-window
  Alternatively, you may execute the bash file with `art2gui` to run
  this command on Mac.
 
-# Running w/o GUI
+### Running w/o GUI
 While ARTDock is in experimental stages, one can run ARTdock with the following syntax:
 ```
 docker run -it --rm -v [folder to mount]:[mount point] artdock
