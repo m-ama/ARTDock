@@ -10,36 +10,28 @@ FROM ubuntu:bionic
 LABEL maintainer="dhiman@musc.edu"
 RUN apt-get update && \
       apt-get install -y --no-install-recommends\
-      libatlas-base-dev
+      libatlas-base-dev \
+      libxm4 \
+      libmotif-dev
 
 # Create directories
-RUN mkdir -p /usr/local/ART/bin
+RUN mkdir -p /usr/local/art
 
 # Add required binaries
-COPY filestoadd/3dwarper.gz /usr/local/ART/bin/3dwarper.gz
-COPY filestoadd/acpcdetect_v2.0_LinuxCentOS6.7.tar.gz \
-    /usr/local/ART/acpcdetect_v2.0_LinuxCentOS6.7.tar.gz
-COPY filestoadd/applywarp3d.gz /usr/local/ART/bin/applywarp3d.gz
-
-# Unzip to directories
-RUN cd /usr/local/ART && \
-    tar -zxf acpcdetect_v2.0_LinuxCentOS6.7.tar.gz
-RUN cd /usr/local/ART/bin && gunzip 3dwarper.gz
-RUN cd /usr/local/ART/bin && gunzip applywarp3d.gz
+ADD art /usr/local/art
 
 # Configure executables
-RUN chmod +x /usr/local/ART/bin/3dwarper
-RUN chmod +x /usr/local/ART/bin/applywarp3d
-RUN chmod +x /usr/local/ART/bin/acpcdetect
-
-# Remove old files
-RUN rm /usr/local/ART/acpcdetect_v2.0_LinuxCentOS6.7.tar.gz
+RUN chmod +x /usr/local/art/bin
 
 # Add directories to PATH
-ENV PATH "$PATH:/usr/loca/ART/bin"
-ENV ARTHOME=/usr/local/ART
+ENV PATH "$PATH:/usr/local/art/bin"
+ENV ARTHOME=/usr/local/art
 
 # Create executables
-RUN echo '#!/bin/bash\n/usr/local/ART/bin/3dwarper "$@"' > /usr/bin/3dwarper && chmod +x /usr/bin/3dwarper
-RUN echo '#!/bin/bash\n/usr/local/ART/bin/acpcdetect "$@"' > /usr/bin/acpcdetect && chmod +x /usr/bin/acpcdetect
-RUN echo '#!/bin/bash\n/usr/local/ART/bin/applywarp3d "$@"' > /usr/bin/applywarp3d && chmod +x /usr/bin/applywarp3d
+RUN echo '#!/bin/bash\n/usr/local/art/bin/3dwarper "$@"' > /usr/local/art/bin/3dwarper && chmod +x /usr/local/art/bin/3dwarper
+RUN echo '#!/bin/bash\n/usr/local/art/bin/acpcdetect "$@"' > /usr/local/art/bin/acpcdetect && chmod +x /usr/local/art/bin/acpcdetect
+RUN echo '#!/bin/bash\n/usr/local/art/bin/applywarp3d "$@"' > /usr/local/art/bin/applywarp3d && chmod +x /usr/local/art/bin/applywarp3d
+RUN echo '#!/bin/bash\n/usr/local/art/bin/art2 "$@"' > /usr/local/art/bin/3dwarper && chmod +x /usr/local/art/bin/art2
+RUN echo '#!/bin/bash\n/usr/local/art/bin/multiplyTransformation "$@"' > /usr/local/art/bin/3dwarper && chmod +x /usr/local/art/bin/multiplyTransformation
+RUN echo '#!/bin/bash\n/usr/local/art/bin/scaleImage "$@"' > /usr/local/art/bin/3dwarper && chmod +x /usr/local/art/bin/scaleImage
+RUN echo '#!/bin/bash\n/usr/local/art/bin/unwarp2d "$@"' > /usr/local/art/bin/3dwarper && chmod +x /usr/local/art/bin/unwarp2d
