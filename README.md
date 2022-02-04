@@ -50,7 +50,7 @@ windows with Docker on Mac](https://medium.com/@mreichelt/how-to-show-x11-window
     ```
     docker run -it --rm \
     -e DISPLAY=host.docker.internal:0  \
-    art art2  
+    artdock art2  
     ```
  Alternatively, you may execute the bash file with `art2gui` to run
  this command on Mac.
